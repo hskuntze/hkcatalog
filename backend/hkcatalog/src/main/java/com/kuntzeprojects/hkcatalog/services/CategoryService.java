@@ -1,6 +1,7 @@
 package com.kuntzeprojects.hkcatalog.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kuntzeprojects.hkcatalog.dto.CategoryDTO;
 import com.kuntzeprojects.hkcatalog.entities.Category;
 import com.kuntzeprojects.hkcatalog.repositories.CategoryRepository;
+import com.kuntzeprojects.hkcatalog.services.exceptions.EntityNotFoundException;
 
 @Service
 public class CategoryService {
@@ -23,4 +25,12 @@ public class CategoryService {
 		
 		return list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
 	}
+	
+	@Transactional(readOnly = true)
+	public CategoryDTO findById(Long id) {
+		Optional<Category> obj = repository.findById(id);
+		Category entity = obj.orElseThrow(() -> new EntityNotFoundException("Entidade não foi encontrada."));
+		return new CategoryDTO(entity);
+	}
+	
 }
