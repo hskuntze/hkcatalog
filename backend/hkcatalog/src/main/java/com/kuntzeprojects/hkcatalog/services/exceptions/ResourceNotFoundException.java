@@ -6,10 +6,10 @@ package com.kuntzeprojects.hkcatalog.services.exceptions;
  * Para uma aplicação mais flexível, é recomendável utilizar o "RuntimeException" pois podemos tratá-la, ou não.
  * @author Kuntze
  */
-public class EntityNotFoundException extends RuntimeException{
+public class ResourceNotFoundException extends RuntimeException{
 	private static final long serialVersionUID = 1L;
 	
-	public EntityNotFoundException(String msg) {
+	public ResourceNotFoundException(String msg) {
 		super(msg);
 	}
 }
