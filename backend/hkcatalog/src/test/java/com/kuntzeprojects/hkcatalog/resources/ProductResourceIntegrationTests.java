@@ -21,7 +21,7 @@ import com.kuntzeprojects.hkcatalog.tests.Factory;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-public class ProductResourceIntegrationServiceTests {
+public class ProductResourceIntegrationTests {
 	@Autowired
 	private MockMvc mockMvc;
 	
