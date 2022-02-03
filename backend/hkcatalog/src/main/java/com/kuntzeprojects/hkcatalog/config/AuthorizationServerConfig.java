@@ -1,5 +1,7 @@
 package com.kuntzeprojects.hkcatalog.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +12,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import com.kuntzeprojects.hkcatalog.components.JwtTokenEnhancer;
 
 @Configuration
 @EnableAuthorizationServer
@@ -38,6 +43,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private AuthenticationManager authManager;
 	
+	@Autowired
+	private JwtTokenEnhancer enhancer;
+	
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
@@ -55,9 +63,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		TokenEnhancerChain chain = new TokenEnhancerChain();
+		chain.setTokenEnhancers(Arrays.asList(converter, enhancer));
+		
 		endpoints.authenticationManager(authManager)
 		.tokenStore(store)
-		.accessTokenConverter(converter);
+		.accessTokenConverter(converter)
+		.tokenEnhancer(chain);
 	}
 
 }
