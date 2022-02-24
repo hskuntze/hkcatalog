@@ -48,17 +48,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-		security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+		security.tokenKeyAccess("permitAll()")
+			.checkTokenAccess("isAuthenticated()");
 	}
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()
-		.withClient(clientId)
-		.secret(encoder.encode(clientSecret))
-		.scopes("read", "write")
-		.authorizedGrantTypes("password")
-		.accessTokenValiditySeconds(duration);
+			.withClient(clientId)
+			.secret(encoder.encode(clientSecret))
+			.scopes("read", "write")
+			.authorizedGrantTypes("password")
+			.accessTokenValiditySeconds(duration);
 	}
 
 	@Override
@@ -67,9 +68,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		chain.setTokenEnhancers(Arrays.asList(converter, enhancer));
 		
 		endpoints.authenticationManager(authManager)
-		.tokenStore(store)
-		.accessTokenConverter(converter)
-		.tokenEnhancer(chain);
+			.tokenStore(store)
+			.accessTokenConverter(converter)
+			.tokenEnhancer(chain);
 	}
 
 }
