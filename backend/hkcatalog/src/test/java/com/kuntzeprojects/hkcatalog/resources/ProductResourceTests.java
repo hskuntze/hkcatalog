@@ -38,7 +38,7 @@ public class ProductResourceTests {
 	
 	@Autowired
 	private ObjectMapper objMapper;
-	
+
 	private Long existingId;
 	private Long nonExistingId;
 	private Long dependentId;

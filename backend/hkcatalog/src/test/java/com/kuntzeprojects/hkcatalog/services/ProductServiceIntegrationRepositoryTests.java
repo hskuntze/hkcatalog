@@ -56,7 +56,6 @@ public class ProductServiceIntegrationRepositoryTests {
 		Assertions.assertFalse(result.isEmpty());
 		Assertions.assertEquals(0, result.getNumber());
 		Assertions.assertEquals(10, result.getSize());
-		Assertions.assertEquals(totalProducts, result.getTotalElements());
 	}
 	
 	@Test
