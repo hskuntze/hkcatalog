@@ -37,7 +37,7 @@ jobs:
 
       - name: Build Maven package
         run: mvn --batch-mode --update-snapshots package
-        working-directory: backend
+        working-directory: backend/hkcatalog
         env:
           MAVEN_OPTS: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
 
