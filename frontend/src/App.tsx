@@ -1,8 +1,13 @@
+import Navbar from './components/Navbar';
 import './assets/styles/custom.scss';
 import './App.css';
 
 function App() {
-  return <h1>HKCatalog</h1>;
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 }
 
 export default App;
