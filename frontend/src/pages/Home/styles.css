@@ -117,11 +117,12 @@
     .home-content {
         align-items: flex-start;
         text-align: left;
-        align-content: space-between;
-        flex-flow: wrap;
-        flex-direction: column;
         padding: 20px;
         height: 480px;
+    }
+
+    .home-content button {
+        margin-top: 5em;
     }
 
     .home-content h3 {
