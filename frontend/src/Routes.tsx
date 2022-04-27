@@ -3,6 +3,7 @@ import Navbar from 'components/Navbar';
 import Home from 'pages/Home';
 import Catalog from 'pages/Catalog';
 import Admin from 'pages/Admin';
+import ProductDetails from 'pages/ProductDetails';
 
 const Routes = () => {
   return (
@@ -13,6 +14,7 @@ const Routes = () => {
           <Route path="/" element={<Home />}/>
           <Route path="/products" element={<Catalog />}/>
           <Route path="/admin" element={<Admin />}/>
+          <Route path="/products/:productId" element={<ProductDetails />} />
         </Switch>
       </BrowserRouter>
     </>

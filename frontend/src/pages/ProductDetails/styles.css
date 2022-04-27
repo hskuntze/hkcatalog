@@ -1,0 +1,133 @@
+.product-details-container {
+    padding: 10px;
+    font-size: 20px;
+}
+
+.products-details-card {
+    padding: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+}
+
+.goback-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.goback-container h5 {
+    margin-left: 15px;
+    letter-spacing: -0.015em;
+    font-size: 1.25em;
+    color: #263238;
+    text-transform: uppercase;
+}
+
+.goback-container svg {
+    color: #407BFF;
+    transform: rotate(-180deg);
+    margin-left: 3px;
+}
+
+.img-container {
+    text-align: center;
+    margin: 10px 5px 25px 5px;
+    border: 1px solid #E1E1E1;
+    border-radius: 20px;
+}
+
+.img-container img {
+    width: 85%;
+    margin: 12px 32px;
+}
+
+.nameprice-container {
+    margin: 0px 5px 27px 5px;
+}
+
+.nameprice-container h1 {
+    color: #263238;
+    font-size: 1.5em;
+}
+
+.description-container {
+    margin: 10px 5px 15px 5px;
+    border: 1px solid #E1E1E1;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.description-container h6, p {
+    margin: 10px 0;
+    color: #9E9E9E;
+}
+
+.description-container h6 {
+    font-size: 0.8em;
+}
+
+.description-container p {
+    font-size: 0.75em;
+}
+
+@media (min-width: 576px) {
+    .product-details-container {
+        padding: 20px;
+    }
+
+    .products-details-card {
+        padding: 20px;
+    }
+
+    .img-container img {
+        width: 75%;
+    }
+}
+
+@media (min-width: 992px) {
+    .product-details-container {
+        padding: 40px;
+    }
+
+    .products-details-card {
+        padding: 40px;
+    }
+
+    .img-container img {
+        width: 45%;
+    }
+
+    .nameprice-container {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+@media (min-width: 1200px) {
+    .nameprice-container {
+        display: block;
+    }
+
+    .img-container img {
+        width: auto;
+        height: 409px;
+    }
+
+    .description-container {
+        min-height: 435px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .nameprice-container {
+        font-size: 1.3em;
+    }
+
+    .img-container img {
+        height: 469px;
+    }
+
+    .description-container {
+        min-height: 629px;
+    }
+}
