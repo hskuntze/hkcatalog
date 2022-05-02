@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import './styles.css';
 
 function Navbar() {
@@ -5,19 +6,19 @@ function Navbar() {
     <nav className="adm-nav-container">
       <ul className="admin-nav-ul">
         <li>
-          <a href="link" className="adm-nav-item active">
+          <NavLink to="/admin/products" className="adm-nav-item active">
             <p>Produtos</p>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a href="link" className="adm-nav-item">
+          <NavLink to="/admin/categories" className="adm-nav-item">
             <p>Categorias</p>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a href="link" className="adm-nav-item">
+          <NavLink to="/admin/users" className="adm-nav-item">
             <p>Usuários</p>
-          </a>
+          </NavLink>
         </li>
       </ul>
     </nav>

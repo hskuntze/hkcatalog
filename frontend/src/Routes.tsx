@@ -13,7 +13,7 @@ const Routes = () => {
         <Switch>
           <Route path="/" element={<Home />}/>
           <Route path="/products" element={<Catalog />}/>
-          <Route path="/admin" element={<Admin />}/>
+          <Route path="/admin/*" element={<Admin />}/>
           <Route path="/products/:productId" element={<ProductDetails />} />
         </Switch>
       </BrowserRouter>
