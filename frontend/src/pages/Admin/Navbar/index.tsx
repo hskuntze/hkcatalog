@@ -6,7 +6,7 @@ function Navbar() {
     <nav className="adm-nav-container">
       <ul className="admin-nav-ul">
         <li>
-          <NavLink to="/admin/products" className="adm-nav-item active">
+          <NavLink to="/admin/products" className="adm-nav-item">
             <p>Produtos</p>
           </NavLink>
         </li>
