@@ -37,7 +37,7 @@ const Login = () => {
           <div className="mb-4">
             <input
               type="text"
-              className="form-control base-input"
+              className={`form-control base-input ${errors.username ? 'is-invalid' : ''}`}
               placeholder="Email"
               {...register("username", {
                 required: 'Campo obrigatório',
@@ -55,7 +55,7 @@ const Login = () => {
                 required: 'Campo obrigatório'
               })}
               type="password"
-              className="form-control base-input"
+              className={`form-control base-input ${errors.password ? 'is-invalid' : ''}`}
               placeholder="Password"
             />
             <div className='invalid-feedback d-block'>{errors.password?.message}</div>
