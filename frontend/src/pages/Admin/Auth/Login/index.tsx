@@ -3,7 +3,7 @@ import ButtonIcon from 'components/ButtonIcon';
 import { useForm } from 'react-hook-form';
 
 import './styles.css';
-import { requestBackendLogin } from 'util/requests';
+import { getAuthData, requestBackendLogin, saveAuthData } from 'util/requests';
 import { useState } from 'react';
 
 type FormData = {
@@ -17,9 +17,13 @@ const Login = () => {
 
   const { register, handleSubmit, formState: {errors} } = useForm<FormData>();
 
+  //Request Access Token (Response Pattern OAuth2)
   const onSubmit = (formData : FormData) => {
     requestBackendLogin(formData)
     .then((response) => {
+      saveAuthData(response.data);
+      const token = getAuthData().access_token;
+      console.log('token: '+token);
       setHasError(false);
       console.log('success!', response);
     })
