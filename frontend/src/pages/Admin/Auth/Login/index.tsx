@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import './styles.css';
 import { requestBackendLogin } from 'util/requests';
+import { useState } from 'react';
 
 type FormData = {
   username: string;
@@ -12,14 +13,18 @@ type FormData = {
 
 const Login = () => {
 
+  const [hasError, setHasError] = useState(false);
+
   const { register, handleSubmit } = useForm<FormData>();
 
   const onSubmit = (formData : FormData) => {
     requestBackendLogin(formData)
     .then((response) => {
+      setHasError(false);
       console.log('success!', response);
     })
     .catch((err) => {
+      setHasError(true);
       console.log('error', err);
     })
   };
@@ -45,6 +50,9 @@ const Login = () => {
               placeholder="Password"
             />
           </div>
+          {hasError && (
+            <div className="alert alert-danger">Credenciais inválidas</div>
+          )}
           <Link to="/admin/auth/recover" className="login-link-recover">
             Esqueci a senha
           </Link>
