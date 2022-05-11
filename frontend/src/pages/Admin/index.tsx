@@ -1,6 +1,7 @@
 import Navbar from "./Navbar";
 import { Routes, Route } from 'react-router-dom';
 import './styles.css';
+import Users from "./User";
 
 const Admin = () => {
     return (
@@ -10,7 +11,7 @@ const Admin = () => {
                 <Routes>
                     <Route path="products" element={<h1>TEste!!</h1>}/>
                     <Route path="categories" element={<h1>ste!!</h1>}/>
-                    <Route path="users" element={<h1>Te!!</h1>}/>
+                    <Route path="users" element={<Users />}/>
                 </Routes>
             </div>
         </div>
