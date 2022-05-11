@@ -1,7 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ButtonIcon from 'components/ButtonIcon';
 import { useForm } from 'react-hook-form';
-
 import './styles.css';
 import { getAuthData, requestBackendLogin, saveAuthData } from 'util/requests';
 import { useState } from 'react';
@@ -17,6 +16,8 @@ const Login = () => {
 
   const { register, handleSubmit, formState: {errors} } = useForm<FormData>();
 
+  const history = useNavigate();
+
   //Request Access Token (Response Pattern OAuth2)
   const onSubmit = (formData : FormData) => {
     requestBackendLogin(formData)
@@ -26,6 +27,7 @@ const Login = () => {
       console.log('token: '+token);
       setHasError(false);
       console.log('success!', response);
+      history('/admin');
     })
     .catch((err) => {
       setHasError(true);
