@@ -11,7 +11,7 @@ import history from "util/navigate";
 const Routes = () => {
   return (
     <>
-      <CustomRouter history={history}>
+      <CustomRouter history={history} >
         <Navbar />
         <Switch>
           <Route path="/" element={<Home />}/>

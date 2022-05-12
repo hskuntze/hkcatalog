@@ -1,6 +1,15 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 import history from './navigate';
+import jwtDecode from 'jwt-decode';
+
+type Role = 'ROLE_OPERATOR' | 'ROLE_ADMIN';
+
+type TokenData = {
+  exp: number;
+  user_name: string;
+  authorities: Role[];
+};
 
 type LoginResponse = {
   access_token: string;
@@ -11,7 +20,8 @@ type LoginResponse = {
   userId: number;
 };
 
-export const BASE_URL = process.env.REACT_APP_BACKEND_URL ?? 'http://localhost:8080';
+export const BASE_URL =
+  process.env.REACT_APP_BACKEND_URL ?? 'http://localhost:8080';
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID ?? 'hkcatalog';
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET ?? 'hkcatalog123';
 
@@ -76,9 +86,22 @@ axios.interceptors.response.use(
   },
   function (error) {
     //Qualquer status code fora dos 2xx vai dar trigger nessa função
-    if(error.response.status === 401 || error.response.status === 403){
-        history.push('/admin/auth');
+    if (error.response.status === 401 || error.response.status === 403) {
+      history.push('/admin/auth');
     }
     return Promise.reject(error);
   }
 );
+
+export const getTokenData = (): TokenData | undefined => {
+  try {
+    return jwtDecode(getAuthData().access_token) as TokenData;
+  } catch (err) {
+    return undefined;
+  }
+};
+
+export const isAuthenticated = (): boolean => {
+  const tokenData = getTokenData();
+  return (tokenData && tokenData.exp * 1000 > Date.now()) ? true : false;
+};
