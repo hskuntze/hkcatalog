@@ -77,5 +77,4 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	    bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
 	    return bean;
 	}
-
 }
