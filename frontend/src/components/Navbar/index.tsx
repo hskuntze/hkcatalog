@@ -1,8 +1,45 @@
 import './styles.css';
 import 'bootstrap/js/src/collapse.js';
 import { Link, NavLink } from 'react-router-dom';
+import {
+  getTokenData,
+  isAuthenticated,
+  removeAuthData,
+  TokenData,
+} from 'util/requests';
+import { useEffect, useState } from 'react';
+import history from 'util/navigate';
+
+type AuthData = {
+  authenticated: boolean;
+  tokenData?: TokenData;
+};
 
 function Navbar() {
+  const [authData, setAuthData] = useState<AuthData>({ authenticated: false });
+
+  const handleLogout = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault(); //Retira a função padrão. No caso do link é: navegar até o endereço
+    removeAuthData();
+    setAuthData({
+      authenticated: false,
+    });
+    history.replace('/');
+  };
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      setAuthData({
+        authenticated: isAuthenticated(),
+        tokenData: getTokenData(),
+      });
+    } else {
+      setAuthData({
+        authenticated: false,
+      });
+    }
+  }, []);
+
   return (
     <>
       <nav className="bg-primary navbar navbar-dark navbar-expand-md main-nav">
@@ -54,6 +91,18 @@ function Navbar() {
                 </NavLink>
               </li>
             </ul>
+          </div>
+          <div className='nav-login-logout'>
+            {authData.authenticated ? (
+              <>
+                <span className='nav-username'>{authData.tokenData?.user_name}</span>
+                <a href="logout" onClick={handleLogout}>
+                  LOGOUT
+                </a>
+              </>
+            ) : (
+              <Link to="/admin/auth">LOGIN</Link>
+            )}
           </div>
         </div>
       </nav>
