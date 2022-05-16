@@ -19,7 +19,7 @@ const Routes = () => {
           <Route path="/admin/*" element={<Admin />}/>
           <Route path="/admin" element={<Navigate replace to="/admin/products"/>} />
           <Route path="/products/:productId" element={<ProductDetails />} />
-          <Route path="/admin/auth/*" element={<Auth />} />]
+          <Route path="/admin/auth/*" element={<Auth />} />
           <Route path="/admin/auth" element={<Navigate replace to="/admin/auth/login" />} />
         </Switch>
       </CustomRouter>
