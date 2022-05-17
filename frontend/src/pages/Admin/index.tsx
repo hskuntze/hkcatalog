@@ -10,11 +10,30 @@ const Admin = () => {
       <Navbar />
       <div className="admin-content">
         <Routes>
-          <Route path="/" element={<PrivateRoute />}>
-            <Route path="products" element={<h1>TEste!!</h1>} />
-            <Route path="categories" element={<h1>ste!!</h1>} />
-            <Route path="users" element={<Users />} />
-          </Route>
+          <Route
+            path="users"
+            element={
+              <PrivateRoute roles={['ROLE_ADMIN']}>
+                <Users />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="products"
+            element={
+              <PrivateRoute roles={['ROLE_OPERATOR']}>
+                <h1>Produtos</h1>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="categories"
+            element={
+              <PrivateRoute roles={['ROLE_OPERATOR']}>
+                <h1>Categorias</h1>
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </div>
     </div>

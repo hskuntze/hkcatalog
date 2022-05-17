@@ -16,7 +16,7 @@ function Navbar() {
             <p>Categorias</p>
           </NavLink>
         </li>
-        { hasAnyRoles(['ROLE_ADMIN']) && (
+        {hasAnyRoles(['ROLE_ADMIN']) === true && (
           <li>
             <NavLink to="/admin/users" className="adm-nav-item">
               <p>Usuários</p>

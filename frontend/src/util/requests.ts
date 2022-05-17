@@ -3,7 +3,7 @@ import qs from 'qs';
 import history from './navigate';
 import jwtDecode from 'jwt-decode';
 
-type Role = 'ROLE_OPERATOR' | 'ROLE_ADMIN';
+export type Role = 'ROLE_OPERATOR' | 'ROLE_ADMIN';
 
 export type TokenData = {
   exp: number;
@@ -90,7 +90,7 @@ axios.interceptors.response.use(
   },
   function (error) {
     //Qualquer status code fora dos 2xx vai dar trigger nessa função
-    if (error.response.status === 401 || error.response.status === 403) {
+    if (error.response.status === 401 ) {
       history.push('/admin/auth');
     }
     return Promise.reject(error);
@@ -111,28 +111,11 @@ export const isAuthenticated = (): boolean => {
 };
 
 export const hasAnyRoles = (roles : Role[]): boolean => {
-  if(roles.length === 0){
-    return true;
-  }
-
   const tokenData = getTokenData();
-  
 
-  //Testando se há role com High Order Function
   if(tokenData !== undefined){
     return roles.some(role => tokenData.authorities.includes(role));
   }
-
-  //Testando se há role com lógica padrão
-  /*
-  if(tokenData !== undefined){
-    for(var i = 0; i < roles.length; i++){
-      if(tokenData.authorities.includes(roles[i])){
-        return true;
-      }
-    }
-  }
-  */
 
   return false;
 }
