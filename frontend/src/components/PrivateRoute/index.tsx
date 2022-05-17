@@ -1,6 +1,6 @@
 import Denied from 'pages/Admin/Denied';
 import { Navigate, useLocation } from 'react-router-dom';
-import { hasAnyRoles, isAuthenticated, Role } from 'util/requests';
+import { hasAnyRoles, isAuthenticated, Role } from 'util/auth';
 
 const PrivateRoute = ({children, roles}:{children:JSX.Element; roles: Array<Role>;}) => {
   let location = useLocation();

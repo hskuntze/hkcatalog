@@ -1,24 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 import history from './navigate';
-import jwtDecode from 'jwt-decode';
-
-export type Role = 'ROLE_OPERATOR' | 'ROLE_ADMIN';
-
-export type TokenData = {
-  exp: number;
-  user_name: string;
-  authorities: Role[];
-};
-
-type LoginResponse = {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
-  scope: string;
-  userFirstname: string;
-  userId: number;
-};
+import { getAuthData } from './storage';
 
 export const BASE_URL =
   process.env.REACT_APP_BACKEND_URL ?? 'http://localhost:8080';
@@ -61,19 +44,6 @@ export const requestBackend = (config: AxiosRequestConfig) => {
   return axios({ ...config, baseURL: BASE_URL, headers });
 };
 
-export const saveAuthData = (obj: LoginResponse) => {
-  localStorage.setItem('authData', JSON.stringify(obj));
-};
-
-export const getAuthData = () => {
-  const str = localStorage.getItem('authData') ?? '{}';
-  return JSON.parse(str) as LoginResponse; //Type safety
-};
-
-export const removeAuthData = () => {
-  localStorage.removeItem('authData');
-};
-
 axios.interceptors.request.use(
   function (config) {
     return config;
@@ -90,32 +60,9 @@ axios.interceptors.response.use(
   },
   function (error) {
     //Qualquer status code fora dos 2xx vai dar trigger nessa função
-    if (error.response.status === 401 ) {
+    if (error.response.status === 401) {
       history.push('/admin/auth');
     }
     return Promise.reject(error);
   }
 );
-
-export const getTokenData = (): TokenData | undefined => {
-  try {
-    return jwtDecode(getAuthData().access_token) as TokenData;
-  } catch (err) {
-    return undefined;
-  }
-};
-
-export const isAuthenticated = (): boolean => {
-  const tokenData = getTokenData();
-  return (tokenData && tokenData.exp * 1000 > Date.now()) ? true : false;
-};
-
-export const hasAnyRoles = (roles : Role[]): boolean => {
-  const tokenData = getTokenData();
-
-  if(tokenData !== undefined){
-    return roles.some(role => tokenData.authorities.includes(role));
-  }
-
-  return false;
-}
