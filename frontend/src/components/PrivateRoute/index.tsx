@@ -1,4 +1,4 @@
-import Denied from 'pages/Admin/Denied';
+import Denied from 'components/Denied';
 import { Navigate, useLocation } from 'react-router-dom';
 import { hasAnyRoles, isAuthenticated, Role } from 'util/auth';
 

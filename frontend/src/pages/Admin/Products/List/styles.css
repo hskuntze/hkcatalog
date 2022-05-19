@@ -1,0 +1,33 @@
+.product-crud {
+  margin-bottom: 20px;
+}
+
+.btn-add {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 16px;
+  letter-spacing: -0.015em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .btn-add {
+    height: 60px;
+  }
+
+  .product-crud {
+    display: flex;
+  }
+
+  .search-bar {
+    margin-left: 25px;
+    flex: 1;
+  }
+}

@@ -1,8 +1,9 @@
 import Navbar from './Navbar';
 import { Routes, Route } from 'react-router-dom';
 import './styles.css';
-import Users from './User';
+import Users from './Users';
 import PrivateRoute from 'components/PrivateRoute';
+import Products from './Products';
 
 const Admin = () => {
   return (
@@ -19,10 +20,10 @@ const Admin = () => {
             }
           />
           <Route
-            path="products"
+            path="products/*"
             element={
               <PrivateRoute roles={['ROLE_OPERATOR']}>
-                <h1>Produtos</h1>
+                <Products />
               </PrivateRoute>
             }
           />
