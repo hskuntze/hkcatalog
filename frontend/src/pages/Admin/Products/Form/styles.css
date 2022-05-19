@@ -1,0 +1,52 @@
+.form-crud-card {
+  padding: 20px;
+}
+
+.form-crud-card h1 {
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.015em;
+  color: #263238;
+  margin-bottom: 30px;
+}
+
+.form-crud-input {
+  margin-bottom: 30px;
+}
+
+.margin-bottom-30 {
+  margin-bottom: 30px;
+}
+
+.inputs-left-container {
+  margin-bottom: 30px;
+}
+
+.form-crud-button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-crud-button {
+  height: 50px;
+  width: 110px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+@media (min-width: 576px) {
+  .form-crud-button-container {
+    justify-content: flex-end;
+  }
+
+  .form-crud-button {
+    margin-left: 20px;
+    width: 175px;
+  }
+}
+
+@media (min-width: 992px) {
+  .inputs-left-container {
+    margin-bottom: 0;
+  }
+}

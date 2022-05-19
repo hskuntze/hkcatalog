@@ -1,3 +1,7 @@
+.product-crud-container {
+  max-width: 1000px;
+}
+
 .product-crud {
   margin-bottom: 20px;
 }
