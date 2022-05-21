@@ -26,8 +26,8 @@ const Form = () => {
     };
 
     requestBackend(params)
-      .then((response) => {
-        console.log(response.data);
+      .then(() => {
+        history.replace('/admin/products');
       })
       .catch((err) => {
         console.log('error', err);
