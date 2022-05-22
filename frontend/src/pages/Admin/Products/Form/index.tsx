@@ -4,10 +4,11 @@ import { Product } from 'types/product';
 import { requestBackend } from 'util/requests';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Category } from 'types/category';
+import CurrencyInput from 'react-currency-input-field';
 import Select from 'react-select';
 import history from 'util/navigate';
 import './styles.css';
-import { Category } from 'types/category';
 
 type UrlParams = {
   productId: string;
@@ -51,7 +52,7 @@ const Form = () => {
     const params: AxiosRequestConfig = {
       method: isEditing ? 'PUT' : 'POST',
       url: isEditing ? `/products/${productId}` : '/products',
-      data: product,
+      data: { ...product, price: String(product.price).replace(',', '.') },
       withCredentials: true,
     };
 
@@ -92,15 +93,21 @@ const Form = () => {
                 </div>
               </div>
               <div className="margin-bottom-30">
-                <input
-                  type="text"
-                  placeholder="Preço"
-                  {...register('price', {
-                    required: 'Campo obrigatório',
-                  })}
-                  className={`form-control base-input ${
-                    errors.price ? 'is-invalid' : ''
-                  }`}
+                <Controller
+                  name="price"
+                  rules={{ required: 'Campo obrigatório' }}
+                  control={control}
+                  render={({ field }) => (
+                    <CurrencyInput
+                      placeholder="Preço"
+                      className={`form-control base-input ${
+                        errors.price ? 'is-invalid' : ''
+                      }`}
+                      disableGroupSeparators={true}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    />
+                  )}
                 />
                 <div className="invalid-feedback d-block">
                   {errors.price?.message}
@@ -114,8 +121,8 @@ const Form = () => {
                     required: 'Campo obrigatório',
                     pattern: {
                       value: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/gm,
-                      message: "Deve ser uma URL válida"
-                    }
+                      message: 'Deve ser uma URL válida',
+                    },
                   })}
                   className={`form-control base-input ${
                     errors.imgUrl ? 'is-invalid' : ''
