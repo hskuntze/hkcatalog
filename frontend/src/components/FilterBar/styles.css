@@ -1,0 +1,30 @@
+.search-bar {
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.filter-input {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #E1E1E1;
+}
+
+.filter-input input{
+  border: none;
+}
+
+.filter-input input:focus{
+  box-shadow: none;
+}
+
+.filter-input input::placeholder{
+  color: #9E9E9E;
+}
+
+
+@media (min-width: 768px) {
+  .search-bar {
+    margin-left: 25px;
+    flex: 1;
+  }
+}
