@@ -13,14 +13,14 @@ function Catalog() {
   const [page, setPage] = useState<SpringPage<Product>>();
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
+  const getProducts = (pageNumber: number) => {
     const params: AxiosRequestConfig = {
       method: 'GET',
-      url: "/products",
+      url: '/products',
       params: {
-        page: 0,
+        page: pageNumber,
         size: 12,
-      }
+      },
     };
 
     setIsLoading(true);
@@ -31,6 +31,10 @@ function Catalog() {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  useEffect(() => {
+    getProducts(0);
   }, []);
 
   return (
@@ -39,7 +43,9 @@ function Catalog() {
         <h1>Catálogo de Produtos</h1>
       </div>
       <div className="row">
-        {isLoading ? <CardLoader /> : (
+        {isLoading ? (
+          <CardLoader />
+        ) : (
           page?.content.map((product) => (
             <div className="col-sm-6 col-lg-4 col-xl-3" key={product.id}>
               <Link to="/products/1">
@@ -50,7 +56,11 @@ function Catalog() {
         )}
       </div>
       <div className="row">
-        <Pagination />
+        <Pagination
+          pageCount={page ? page.totalPages : 0}
+          range={3}
+          onChange={getProducts}
+        />
       </div>
     </div>
   );
