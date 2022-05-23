@@ -1,9 +1,9 @@
 import { ReactComponent as SearchIcon } from 'assets/images/Union.svg';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import Select from 'react-select';
 import { Category } from 'types/category';
 import { requestBackend } from 'util/requests';
+import Select from 'react-select';
 import './styles.css';
 
 type FilterProduct = {
@@ -40,8 +40,8 @@ const FilterBar = () => {
             {...register('name')}
             className="form-control"
           />
-          <button>
-            <SearchIcon />
+          <button className="filter-icon">
+            <SearchIcon/>
           </button>
         </div>
         <div className="filter-category-and-clear">
@@ -54,14 +54,15 @@ const FilterBar = () => {
                   {...field}
                   options={selectCategories}
                   isClearable
-                  classNamePrefix="product-crud-select"
+                  placeholder="Categoria"
+                  classNamePrefix="product-filter-select"
                   getOptionLabel={(category: Category) => category.name}
                   getOptionValue={(category: Category) => String(category.id)}
                 />
               )}
             />
           </div>
-          <button className="btn btn-outline-secondary">Limpar filtro</button>
+          <button className="btn btn-outline-secondary clean-button">Limpar <span className='span-filtro'>Filtro</span></button>
         </div>
       </form>
     </div>
