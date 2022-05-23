@@ -6,12 +6,16 @@ import { requestBackend } from 'util/requests';
 import Select from 'react-select';
 import './styles.css';
 
-type FilterProduct = {
+export type FilterProduct = {
   name: string;
   category: Category | null;
 };
 
-const FilterBar = () => {
+type Props = {
+  onSubmitFilter : (data: FilterProduct) => void;
+}
+
+const FilterBar = ({onSubmitFilter}: Props) => {
   const { register, handleSubmit, control, setValue, getValues } = useForm<FilterProduct>();
 
   const [selectCategories, setSelectCategories] = useState<Category[]>([]);
@@ -27,8 +31,7 @@ const FilterBar = () => {
       name: getValues('name'),
       category: getValues('category')
     }
-
-    console.log(obj);
+    onSubmitFilter(obj);
   }
 
   useEffect(() => {
@@ -38,7 +41,7 @@ const FilterBar = () => {
   }, []);
 
   const onSubmit = (filter: FilterProduct) => {
-    console.log(filter);
+    onSubmitFilter(filter);
   };
 
   return (

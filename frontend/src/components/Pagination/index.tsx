@@ -3,30 +3,40 @@ import ReactPaginate from 'react-paginate';
 import './styles.css';
 
 type Props = {
-    pageCount: number;
-    range: number;
-    onChange?: (pageNumber: number) => void;
-}
+  pageCount: number;
+  range: number;
+  forcePage?: number;
+  onChange?: (pageNumber: number) => void;
+};
 
-const Pagination = ({pageCount, range, onChange}: Props) => {
+const Pagination = ({ forcePage, pageCount, range, onChange }: Props) => {
   return (
     <>
-      <ReactPaginate 
+      <ReactPaginate
         pageCount={pageCount}
         pageRangeDisplayed={range}
         marginPagesDisplayed={1}
         containerClassName="pagination-container"
-        pageLinkClassName='pagination-item'
-        breakClassName='pagination-item'
-        previousLabel={<div className='pag-arrow-container'><ArrowIcon /></div>}
-        nextLabel={<div className='pag-arrow-container'><ArrowIcon /></div>}
+        pageLinkClassName="pagination-item"
+        breakClassName="pagination-item"
+        previousLabel={
+          <div className="pag-arrow-container">
+            <ArrowIcon />
+          </div>
+        }
+        nextLabel={
+          <div className="pag-arrow-container">
+            <ArrowIcon />
+          </div>
+        }
         previousClassName="arrow-previous"
-        nextClassName='arrow-next'
-        activeLinkClassName='pag-active'
-        disabledClassName='arrow-inactive'
-        nextLinkClassName='arrow-active'
-        previousLinkClassName='arrow-active'
-        onPageChange={(items) => (onChange) ? onChange(items.selected) : {}}
+        nextClassName="arrow-next"
+        activeLinkClassName="pag-active"
+        disabledClassName="arrow-inactive"
+        nextLinkClassName="arrow-active"
+        previousLinkClassName="arrow-active"
+        forcePage={forcePage}
+        onPageChange={(items) => (onChange ? onChange(items.selected) : {})}
       />
     </>
   );
