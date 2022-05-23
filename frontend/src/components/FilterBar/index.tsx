@@ -8,18 +8,29 @@ import './styles.css';
 
 type FilterProduct = {
   name: string;
-  category: Category;
+  category: Category | null;
 };
 
 const FilterBar = () => {
-  const {
-    register,
-    handleSubmit,
-    control,
-  } = useForm<FilterProduct>();
+  const { register, handleSubmit, control, setValue, getValues } = useForm<FilterProduct>();
 
   const [selectCategories, setSelectCategories] = useState<Category[]>([]);
-  
+
+  const handleClear = () => {
+    setValue('name', '');
+    setValue('category', null);
+  }
+
+  const handleChangeCategory = (value: Category) => {
+    setValue('category', value);
+    const obj = {
+      name: getValues('name'),
+      category: getValues('category')
+    }
+
+    console.log(obj);
+  }
+
   useEffect(() => {
     requestBackend({ url: '/categories' }).then((response) => {
       setSelectCategories(response.data.content);
@@ -41,7 +52,7 @@ const FilterBar = () => {
             className="form-control"
           />
           <button className="filter-icon">
-            <SearchIcon/>
+            <SearchIcon />
           </button>
         </div>
         <div className="filter-category-and-clear">
@@ -54,6 +65,7 @@ const FilterBar = () => {
                   {...field}
                   options={selectCategories}
                   isClearable
+                  onChange={(value) => handleChangeCategory(value as Category)}
                   placeholder="Categoria"
                   classNamePrefix="product-filter-select"
                   getOptionLabel={(category: Category) => category.name}
@@ -62,7 +74,12 @@ const FilterBar = () => {
               )}
             />
           </div>
-          <button className="btn btn-outline-secondary clean-button">Limpar <span className='span-filtro'>Filtro</span></button>
+          <button
+            onClick={handleClear}
+            className="btn btn-outline-secondary clean-button"
+          >
+            Limpar <span className="span-filtro">Filtro</span>
+          </button>
         </div>
       </form>
     </div>
