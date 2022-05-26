@@ -7,6 +7,10 @@ export const isAuthenticated = (): boolean => {
 };
 
 export const hasAnyRoles = (roles: Role[]): boolean => {
+  if(roles.length === 0) {
+    return true;
+  }
+  
   const tokenData = getTokenData();
 
   if (tokenData !== undefined) {
