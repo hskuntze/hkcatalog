@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import FilterBar from 'components/FilterBar';
+import FilterBar, { FilterProduct } from 'components/FilterBar';
 import Pagination from 'components/Pagination';
 import ProductCrudCard from 'pages/Admin/Products/ProductCrudCard';
 import { useCallback, useEffect, useState } from 'react';
@@ -11,15 +11,26 @@ import './styles.css';
 
 type ControlComponentsData = {
   activePage: number;
+  filterData: FilterProduct;
 };
 
 const List = () => {
   const [page, setPage] = useState<SpringPage<Product>>();
   const [controlComponentsData, setControlComponentsData] =
-    useState<ControlComponentsData>({ activePage: 0 });
+    useState<ControlComponentsData>({
+      activePage: 0,
+      filterData: { name: '', category: null },
+    });
 
   const handlePageChange = (pageNumber: number) => {
-    setControlComponentsData({ activePage: pageNumber });
+    setControlComponentsData({
+      activePage: pageNumber,
+      filterData: controlComponentsData.filterData,
+    });
+  };
+
+  const handleSubmitFilter = (data: FilterProduct) => {
+    setControlComponentsData({ activePage: 0, filterData: data });
   };
 
   const getProducts = useCallback(() => {
@@ -29,6 +40,8 @@ const List = () => {
       params: {
         page: controlComponentsData.activePage,
         size: 3,
+        name: controlComponentsData.filterData.name,
+        categoryId: controlComponentsData.filterData.category?.id, //O nome do parâmetro é padrão da URL definida no backend
       },
     };
 
@@ -49,7 +62,7 @@ const List = () => {
             ADICIONAR
           </button>
         </Link>
-        <FilterBar />
+        <FilterBar onSubmitFilter={handleSubmitFilter} />
       </div>
       <div className="row">
         {page?.content.map((product) => (
@@ -59,6 +72,7 @@ const List = () => {
         ))}
       </div>
       <Pagination
+        forcePage={page?.number}
         pageCount={page ? page.totalPages : 0}
         range={2}
         onChange={handlePageChange}

@@ -1,25 +1,39 @@
 import { ReactComponent as SearchIcon } from 'assets/images/Union.svg';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import Select from 'react-select';
 import { Category } from 'types/category';
 import { requestBackend } from 'util/requests';
+import Select from 'react-select';
 import './styles.css';
 
-type FilterProduct = {
+export type FilterProduct = {
   name: string;
-  category: Category;
+  category: Category | null;
 };
 
-const FilterBar = () => {
-  const {
-    register,
-    handleSubmit,
-    control,
-  } = useForm<FilterProduct>();
+type Props = {
+  onSubmitFilter : (data: FilterProduct) => void;
+}
+
+const FilterBar = ({onSubmitFilter}: Props) => {
+  const { register, handleSubmit, control, setValue, getValues } = useForm<FilterProduct>();
 
   const [selectCategories, setSelectCategories] = useState<Category[]>([]);
-  
+
+  const handleClear = () => {
+    setValue('name', '');
+    setValue('category', null);
+  }
+
+  const handleChangeCategory = (value: Category) => {
+    setValue('category', value);
+    const obj = {
+      name: getValues('name'),
+      category: getValues('category')
+    }
+    onSubmitFilter(obj);
+  }
+
   useEffect(() => {
     requestBackend({ url: '/categories' }).then((response) => {
       setSelectCategories(response.data.content);
@@ -27,7 +41,7 @@ const FilterBar = () => {
   }, []);
 
   const onSubmit = (filter: FilterProduct) => {
-    console.log(filter);
+    onSubmitFilter(filter);
   };
 
   return (
@@ -40,7 +54,7 @@ const FilterBar = () => {
             {...register('name')}
             className="form-control"
           />
-          <button>
+          <button className="filter-icon">
             <SearchIcon />
           </button>
         </div>
@@ -54,14 +68,21 @@ const FilterBar = () => {
                   {...field}
                   options={selectCategories}
                   isClearable
-                  classNamePrefix="product-crud-select"
+                  onChange={(value) => handleChangeCategory(value as Category)}
+                  placeholder="Categoria"
+                  classNamePrefix="product-filter-select"
                   getOptionLabel={(category: Category) => category.name}
                   getOptionValue={(category: Category) => String(category.id)}
                 />
               )}
             />
           </div>
-          <button className="btn btn-outline-secondary">Limpar filtro</button>
+          <button
+            onClick={handleClear}
+            className="btn btn-outline-secondary clean-button"
+          >
+            Limpar <span className="span-filtro">Filtro</span>
+          </button>
         </div>
       </form>
     </div>
