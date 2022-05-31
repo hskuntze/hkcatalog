@@ -59,20 +59,12 @@ const Form = () => {
 
     requestBackend(params)
       .then(() => {
-<<<<<<< HEAD
         toast.info('Sucesso');
         history.replace('/admin/products');
       })
       .catch((err) => {
         toast.error('Erro');
         console.log('error', err);
-=======
-        toast.info('Produto cadastrado com sucesso!');
-        history.replace('/admin/products');
-      })
-      .catch((err) => {
-        toast.error('Erro na inserção!');
->>>>>>> b0899298365ca84229896c90dbaeff73df2759c1
       });
   };
 
