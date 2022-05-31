@@ -14,7 +14,21 @@ function App() {
   return (
     <AuthContext.Provider value={{ authContextData, setAuthContextData }}>
       <Routes />
+<<<<<<< HEAD
       <ToastContainer />
+=======
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+>>>>>>> b0899298365ca84229896c90dbaeff73df2759c1
     </AuthContext.Provider>
   );
 }
