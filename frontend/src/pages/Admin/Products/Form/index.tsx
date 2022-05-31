@@ -5,6 +5,7 @@ import { requestBackend } from 'util/requests';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Category } from 'types/category';
+import { toast } from 'react-toastify';
 import CurrencyInput from 'react-currency-input-field';
 import Select from 'react-select';
 import history from 'util/navigate';
@@ -58,9 +59,11 @@ const Form = () => {
 
     requestBackend(params)
       .then(() => {
+        toast.info('Sucesso');
         history.replace('/admin/products');
       })
       .catch((err) => {
+        toast.error('Erro');
         console.log('error', err);
       });
   };
@@ -87,6 +90,7 @@ const Form = () => {
                   className={`form-control base-input ${
                     errors.name ? 'is-invalid' : ''
                   }`}
+                  data-testid="name"
                 />
                 <div className="invalid-feedback d-block">
                   {errors.name?.message}
@@ -106,6 +110,7 @@ const Form = () => {
                       disableGroupSeparators={true}
                       value={field.value}
                       onValueChange={field.onChange}
+                      data-testid="price"
                     />
                   )}
                 />
@@ -119,20 +124,24 @@ const Form = () => {
                   placeholder="URL da imagem do produto"
                   {...register('imgUrl', {
                     required: 'Campo obrigatório',
-                    pattern: {
-                      value: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/gm,
-                      message: 'Deve ser uma URL válida',
-                    },
+                    // pattern: {
+                    //   value: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/,
+                    //   message: 'Deve ser uma URL válida',
+                    // },
                   })}
                   className={`form-control base-input ${
                     errors.imgUrl ? 'is-invalid' : ''
                   }`}
+                  data-testid="imgUrl"
                 />
                 <div className="invalid-feedback d-block">
                   {errors.imgUrl?.message}
                 </div>
               </div>
               <div className="margin-bottom-30">
+                <label htmlFor="categories" className="d-none">
+                  Categorias
+                </label>
                 <Controller
                   name="categories"
                   rules={{ required: true }}
@@ -147,6 +156,7 @@ const Form = () => {
                       getOptionValue={(category: Category) =>
                         String(category.id)
                       }
+                      inputId="categories"
                     />
                   )}
                 />
@@ -168,6 +178,7 @@ const Form = () => {
                   className={`form-control base-input h-auto ${
                     errors.description ? 'is-invalid' : ''
                   }`}
+                  data-testid="description"
                 />
                 <div className="invalid-feedback d-block">
                   {errors.description?.message}

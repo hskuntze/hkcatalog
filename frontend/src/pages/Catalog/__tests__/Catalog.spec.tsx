@@ -12,6 +12,10 @@ describe('Catalog tests', () => {
 
   test('should render Catalog with products', async () => {
     render(
+      /*
+       * O Router é necessário para o correto funcionamento de
+       * elementos que sejam do contexto do react-router-dom
+       */
       <CustomRouter history={history}>
         <Catalog />
       </CustomRouter>
