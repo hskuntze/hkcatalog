@@ -72,7 +72,7 @@ const findAllCategories = {
   empty: false,
 };
 
-const saveProductResponse = {
+export const productResponse = {
   id: 2,
   name: 'Smart TV',
   price: 2190.0,
@@ -96,10 +96,15 @@ const saveProductResponse = {
 export const server = setupServer(
   // Describe the requests to mock.
   rest.get(`${BASE_URL}/categories`, (req, res, ctx) => {
-    return res(ctx.json(findAllCategories));
+    return res(ctx.status(200), ctx.json(findAllCategories));
   }),
-
   rest.post(`${BASE_URL}/products`, (req, res, ctx) => {
-    return res(ctx.status(201), ctx.json(saveProductResponse));
+    return res(ctx.status(201), ctx.json(productResponse));
+  }),
+  rest.put(`${BASE_URL}/products/:productId`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(productResponse));
+  }),
+  rest.get(`${BASE_URL}/products/:productId`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(productResponse));
   })
 );
